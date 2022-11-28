@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hiblock>
+	<hiblock>
+		<id>5</id>
+		<name>CSIChatBotChannels</name>
+		<table_name>csichatbot_channels</table_name>
+	</hiblock>
+	<langs>
+		<lang>
+			<id>5</id>
+			<lid>ru</lid>
+			<name>CSI: каналы</name>
+		</lang>
+		<lang>
+			<id>5</id>
+			<lid>en</lid>
+			<name>CSI: channels</name>
+		</lang>
+	</langs>
+	<fields>
+		<field>
+			<id>425</id>
+			<entity_id>HLBLOCK_5</entity_id>
+			<field_name>UF_CSI_CHANNEL_NAME</field_name>
+			<user_type_id>string</user_type_id>
+			<xml_id />
+			<sort>100</sort>
+			<multiple>N</multiple>
+			<mandatory>N</mandatory>
+			<show_filter>N</show_filter>
+			<show_in_list>Y</show_in_list>
+			<edit_in_list>Y</edit_in_list>
+			<is_searchable>N</is_searchable>
+			<settings>
+				<size>20</size>
+				<rows>1</rows>
+				<regexp />
+				<min_length>0</min_length>
+				<max_length>0</max_length>
+				<default_value />
+			</settings>
+			<edit_form_label>
+				<en />
+				<ru>Название канала</ru>
+			</edit_form_label>
+			<list_column_label>
+				<en />
+				<ru>Название канала</ru>
+			</list_column_label>
+			<list_filter_label>
+				<en />
+				<ru>Название канала</ru>
+			</list_filter_label>
+			<error_message>
+				<en />
+				<ru />
+			</error_message>
+			<help_message>
+				<en />
+				<ru />
+			</help_message>
+			<base_type>string</base_type>
+		</field>
+		<field>
+			<id>448</id>
+			<entity_id>HLBLOCK_5</entity_id>
+			<field_name>UF_CSI_CHANNEL_IDENTIFICATOR</field_name>
+			<user_type_id>string</user_type_id>
+			<xml_id />
+			<sort>100</sort>
+			<multiple>N</multiple>
+			<mandatory>N</mandatory>
+			<show_filter>N</show_filter>
+			<show_in_list>Y</show_in_list>
+			<edit_in_list>Y</edit_in_list>
+			<is_searchable>N</is_searchable>
+			<settings>
+				<size>20</size>
+				<rows>1</rows>
+				<regexp />
+				<min_length>0</min_length>
+				<max_length>0</max_length>
+				<default_value />
+			</settings>
+			<edit_form_label>
+				<en />
+				<ru>Идентификатор канала</ru>
+			</edit_form_label>
+			<list_column_label>
+				<en />
+				<ru>Идентификатор канала</ru>
+			</list_column_label>
+			<list_filter_label>
+				<en />
+				<ru>Идентификатор канала</ru>
+			</list_filter_label>
+			<error_message>
+				<en />
+				<ru />
+			</error_message>
+			<help_message>
+				<en />
+				<ru />
+			</help_message>
+			<base_type>string</base_type>
+		</field>
+		<field>
+			<id>449</id>
+			<entity_id>HLBLOCK_5</entity_id>
+			<field_name>UF_CSI_CHANNEL_DATE_CREATE</field_name>
+			<user_type_id>datetime</user_type_id>
+			<xml_id />
+			<sort>150</sort>
+			<multiple>N</multiple>
+			<mandatory>N</mandatory>
+			<show_filter>N</show_filter>
+			<show_in_list>Y</show_in_list>
+			<edit_in_list>Y</edit_in_list>
+			<is_searchable>N</is_searchable>
+			<settings>
+				<default_value>
+					<type>NOW</type>
+					<value />
+				</default_value>
+				<use_second>Y</use_second>
+				<use_timezone>N</use_timezone>
+			</settings>
+			<edit_form_label>
+				<en />
+				<ru>Дата создания</ru>
+			</edit_form_label>
+			<list_column_label>
+				<en />
+				<ru>Дата создания</ru>
+			</list_column_label>
+			<list_filter_label>
+				<en />
+				<ru>Дата создания</ru>
+			</list_filter_label>
+			<error_message>
+				<en />
+				<ru />
+			</error_message>
+			<help_message>
+				<en />
+				<ru />
+			</help_message>
+			<base_type>datetime</base_type>
+		</field>
+		<field>
+			<id>426</id>
+			<entity_id>HLBLOCK_5</entity_id>
+			<field_name>UF_CSI_CHANNEL_DESCRIPTION</field_name>
+			<user_type_id>idSimaiHtml</user_type_id>
+			<xml_id />
+			<sort>200</sort>
+			<multiple>N</multiple>
+			<mandatory>N</mandatory>
+			<show_filter>N</show_filter>
+			<show_in_list>Y</show_in_list>
+			<edit_in_list>Y</edit_in_list>
+			<is_searchable>N</is_searchable>
+			<settings>
+				<size>20</size>
+				<rows>1</rows>
+				<regexp />
+				<min_length>0</min_length>
+				<max_length>0</max_length>
+				<default_value />
+			</settings>
+			<edit_form_label>
+				<en />
+				<ru>Описание канала</ru>
+			</edit_form_label>
+			<list_column_label>
+				<en />
+				<ru>Описание канала</ru>
+			</list_column_label>
+			<list_filter_label>
+				<en />
+				<ru>Описание канала</ru>
+			</list_filter_label>
+			<error_message>
+				<en />
+				<ru />
+			</error_message>
+			<help_message>
+				<en />
+				<ru />
+			</help_message>
+			<base_type>string</base_type>
+		</field>
+		<field>
+			<id>427</id>
+			<entity_id>HLBLOCK_5</entity_id>
+			<field_name>UF_CSI_CHANNEL_IMAGE</field_name>
+			<user_type_id>file</user_type_id>
+			<xml_id />
+			<sort>300</sort>
+			<multiple>N</multiple>
+			<mandatory>N</mandatory>
+			<show_filter>N</show_filter>
+			<show_in_list>Y</show_in_list>
+			<edit_in_list>Y</edit_in_list>
+			<is_searchable>N</is_searchable>
+			<settings>
+				<size>20</size>
+				<list_width>200</list_width>
+				<list_height>200</list_height>
+				<max_show_size>0</max_show_size>
+				<max_allowed_size>0</max_allowed_size>
+				<extensions />
+				<target_blank>Y</target_blank>
+			</settings>
+			<edit_form_label>
+				<en />
+				<ru>Изображение канала</ru>
+			</edit_form_label>
+			<list_column_label>
+				<en />
+				<ru>Изображение канала</ru>
+			</list_column_label>
+			<list_filter_label>
+				<en />
+				<ru>Изображение канала</ru>
+			</list_filter_label>
+			<error_message>
+				<en />
+				<ru />
+			</error_message>
+			<help_message>
+				<en />
+				<ru />
+			</help_message>
+			<base_type>file</base_type>
+		</field>
+		<field>
+			<id>428</id>
+			<entity_id>HLBLOCK_5</entity_id>
+			<field_name>UF_CSI_CHANNEL_ID_CHAT_CHANNEL</field_name>
+			<user_type_id>string</user_type_id>
+			<xml_id />
+			<sort>400</sort>
+			<multiple>N</multiple>
+			<mandatory>N</mandatory>
+			<show_filter>N</show_filter>
+			<show_in_list>Y</show_in_list>
+			<edit_in_list>Y</edit_in_list>
+			<is_searchable>N</is_searchable>
+			<settings>
+				<size>20</size>
+				<rows>1</rows>
+				<regexp />
+				<min_length>0</min_length>
+				<max_length>0</max_length>
+				<default_value />
+			</settings>
+			<edit_form_label>
+				<en />
+				<ru>Идентификатор чата канала</ru>
+			</edit_form_label>
+			<list_column_label>
+				<en />
+				<ru>Идентификатор чата канала</ru>
+			</list_column_label>
+			<list_filter_label>
+				<en />
+				<ru>Идентификатор чата канала</ru>
+			</list_filter_label>
+			<error_message>
+				<en />
+				<ru />
+			</error_message>
+			<help_message>
+				<en />
+				<ru />
+			</help_message>
+			<base_type>string</base_type>
+		</field>
+	</fields>
+	<items>
+		<item>
+			<id>1</id>
+			<uf_csi_channel_name>AutopostingChannel</uf_csi_channel_name>
+			<uf_csi_channel_identificator>-1001348646235</uf_csi_channel_identificator>
+			<uf_csi_channel_date_create />
+			<uf_csi_channel_description>Описание канала&lt;br&gt;</uf_csi_channel_description>
+			<uf_csi_channel_image>0</uf_csi_channel_image>
+			<uf_csi_channel_id_chat_channel>-1001723250963</uf_csi_channel_id_chat_channel>
+		</item>
+		<item>
+			<id>27</id>
+			<uf_csi_channel_name>Канал для тестирования чатбота</uf_csi_channel_name>
+			<uf_csi_channel_identificator>-1001619122301</uf_csi_channel_identificator>
+			<uf_csi_channel_date_create>25.03.2022 19:01:46</uf_csi_channel_date_create>
+			<uf_csi_channel_description />
+			<uf_csi_channel_image>0</uf_csi_channel_image>
+			<uf_csi_channel_id_chat_channel />
+		</item>
+		<item>
+			<id>28</id>
+			<uf_csi_channel_name>Инвестпортал Республики Башкортостан</uf_csi_channel_name>
+			<uf_csi_channel_identificator>-1001220541832</uf_csi_channel_identificator>
+			<uf_csi_channel_date_create>04.04.2022 10:49:34</uf_csi_channel_date_create>
+			<uf_csi_channel_description />
+			<uf_csi_channel_image>0</uf_csi_channel_image>
+			<uf_csi_channel_id_chat_channel />
+		</item>
+		<item>
+			<id>29</id>
+			<uf_csi_channel_name>Минцифры Башкортостана</uf_csi_channel_name>
+			<uf_csi_channel_identificator>-1001768454939</uf_csi_channel_identificator>
+			<uf_csi_channel_date_create>05.04.2022 09:36:46</uf_csi_channel_date_create>
+			<uf_csi_channel_description />
+			<uf_csi_channel_image>0</uf_csi_channel_image>
+			<uf_csi_channel_id_chat_channel />
+		</item>
+		<item>
+			<id>30</id>
+			<uf_csi_channel_name>Госуслуги Башкортостан</uf_csi_channel_name>
+			<uf_csi_channel_identificator>-1001575445324</uf_csi_channel_identificator>
+			<uf_csi_channel_date_create>07.04.2022 10:39:12</uf_csi_channel_date_create>
+			<uf_csi_channel_description />
+			<uf_csi_channel_image>0</uf_csi_channel_image>
+			<uf_csi_channel_id_chat_channel />
+		</item>
+	</items>
+</hiblock>
