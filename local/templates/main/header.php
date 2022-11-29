@@ -85,7 +85,7 @@ use Bitrix\Main\Page\Asset;
 </div>
 
 <!-- Шапка сайта (меню) -->
-<header id="sticky-header" class="header-area header-wrapper white-bg">
+<header id="sticky-header" class="header-area header-wrapper <?= ($APPLICATION->getCurDir() === '/') ? 'transparent-header' : 'white-bg' ?>">
     <!-- Меню (для десктопа) -->
     <div class="header-middle-area full-width">
         <div class="container">
@@ -193,6 +193,7 @@ use Bitrix\Main\Page\Asset;
 </header>
 
 <!-- Хлебные крошки (навигация) -->
+<?php if ($APPLICATION->getCurDir() !== '/'): ?>
 <div class="breadcrumb-area brand-bg ptb-100">
     <div class="container width-100">
         <div class="row z-index">
@@ -216,4 +217,5 @@ use Bitrix\Main\Page\Asset;
         </div>
     </div>
 </div>
+<?php endif; ?>
 
