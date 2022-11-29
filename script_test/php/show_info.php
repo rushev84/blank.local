@@ -14,8 +14,9 @@ $properties = $generator->getProperties($id);
         <td class="add_td"><label for="ACTIVE">Активность</label></td>
         <td><input
                     type="checkbox"
+                    class="field-checkbox"
                     id="ACTIVE"
-                    value="newsletter"/></td>
+                    value="newsletter" checked/></td>
     </tr>
     <tr>
         <td>
@@ -27,22 +28,25 @@ $properties = $generator->getProperties($id);
         <td class="add_td"><label for="NAME">Имя</label></td>
         <td><input
                     type="checkbox"
+                    class="field-checkbox"
                     id="NAME"
-                    value="newsletter"/></td>
+                    value="newsletter" checked/></td>
     </tr>
     <tr>
         <td class="add_td"><label for="PREVIEW_TEXT">Предварительное описание</label></td>
         <td><input
                     type="checkbox"
+                    class="field-checkbox"
                     id="PREVIEW_TEXT"
-                    value="newsletter"/></td>
+                    value="newsletter" checked/></td>
     </tr>
     <tr>
         <td class="add_td"><label for="DETAIL_TEXT">Детальное описание</label></td>
         <td><input
                     type="checkbox"
+                    class="field-checkbox"
                     id="DETAIL_TEXT"
-                    value="newsletter"/></td>
+                    value="newsletter" checked/></td>
     </tr>
 
 </table>
@@ -61,11 +65,62 @@ $properties = $generator->getProperties($id);
             <td class="add_td"><label for="<?= $key ?>"><?= $value['NAME'] ?></label></td>
             <td><input
                         type="checkbox"
+                        class="property-checkbox"
                         id="<?= $key ?>"
-                        value="newsletter"/></td>
+                        value="newsletter" checked/></td>
         </tr>
         <?php $i++ ?>
     <?php endforeach; ?>
 </table>
 <br>
-<button class="btn">Создать инфоблоки</button>
+Количество элементов: <input id="count" type="number" style="width: 50px" value="3"><br><br>
+<button class="btn" onclick="sendRequest()">Создать элементы</button>
+<br>
+
+<div class="resp"></div>
+
+<script>
+
+    // console.log(document.getElementById("INSTRUMENT_TYPE").checked)
+
+    function sendRequest() {
+
+        let request = {
+            'IBLOCK_ID': <?= $id ?>,
+            'COUNT': document.getElementById("count").value,
+            'fields': [],
+            'properties': []
+        }
+
+        fieldCheckboxes = document.querySelectorAll('.field-checkbox')
+
+        fieldCheckboxes.forEach((fieldCheckbox) => {
+            if (fieldCheckbox.checked) {
+                request.fields.push(fieldCheckbox.id)
+            }
+        })
+
+        propertyCheckboxes = document.querySelectorAll('.property-checkbox')
+
+        propertyCheckboxes.forEach((propertyCheckbox) => {
+            if (propertyCheckbox.checked) {
+                request.properties.push(propertyCheckbox.id)
+            }
+        })
+
+        // console.log(request)
+
+        $
+            .ajax({
+                method: "POST",
+                url: "php/add_elements.php",
+                data: {
+                    request: request
+                }
+            })
+            .done(function (response) {
+                $("div.resp").html(response);
+            })
+    }
+
+</script>
