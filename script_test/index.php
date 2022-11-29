@@ -13,7 +13,7 @@ require_once 'php/run.php';
 <body>
 
 <div class="main">
-    <select class="js-select2" id="js-select2" name="city" style="width: 300px" onchange="showFields()">
+    <select class="js-select2" id="js-select2" name="city" style="width: 300px" onchange="showSettingsForm()">
         <option value=""></option>
         <?php foreach ($iblocks as $iblock) {
             echo "<option value='{$iblock['id']}'>{$iblock['name']}</option>";
@@ -21,14 +21,7 @@ require_once 'php/run.php';
         ?>
     </select>
 
-    <div class="fields">
-
-
-
-
-    </div>
-
-    <div class="properties">
+    <div class="settings-form">
 
 
 
@@ -45,18 +38,17 @@ require_once 'php/run.php';
 
 <script>
 
-    function showFields() {
+    function showSettingsForm() {
         $
             .ajax({
                 method: "POST",
                 url: "php/show_info.php",
                 data: {
                     id: $('#js-select2').val()
-                    // id: 284
                 }
             })
             .done(function (response) {
-                $("div.properties").html(response);
+                $("div.settings-form").html(response);
             })
     }
 
