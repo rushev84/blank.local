@@ -39,13 +39,15 @@ for ($i = 1; $i <= $request['COUNT']; $i++) {
     $PROP = [];
 
     foreach ($chosenProperties as $property) {
-        $PROP[$property['CODE']] = $generator->getPropertyValue($property);
+        $PROP[$property['CODE']] = $generator->getPropertyValue($request['IBLOCK_ID'], $property);
     }
 
     // добавляем свойства в $arLoadProductArray (если они есть)
     if (!empty($PROP)) {
         $arLoadProductArray['PROPERTY_VALUES'] = $PROP;
     }
+
+//    dd($PROP);
 
 //    dd($arLoadProductArray);
 

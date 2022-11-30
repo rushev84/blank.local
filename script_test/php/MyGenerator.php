@@ -15,6 +15,31 @@ class MyGenerator
         return $words[rand(0, count($words) - 1)];
     }
 
+    public function getRandNumber()
+    {
+        return rand(1, 1000);
+    }
+
+    // Принимает id инфоблока, код свойства инфоблока (свойство должно быть типа "список").
+    // Возвращает случайный элемент из списка для данного свойства.
+    public function getRandListItem(int $iblockId, string $propertyCode): array
+    {
+        $property_enums = CIBlockPropertyEnum::GetList(Array("DEF"=>"DESC", "SORT"=>"ASC"), Array("IBLOCK_ID"=> $iblockId, "CODE"=> $propertyCode));
+
+        $enums = [];
+
+        while($enum_fields = $property_enums->GetNext())
+        {
+           $enums[] = $enum_fields;
+        }
+
+        $enumIds = array_map(fn($enum) => $enum['ID'], $enums);
+
+        $randEnum = $enumIds[array_rand($enumIds)];
+
+        return ["VALUE" => $randEnum];
+    }
+
 
     public function getIblocks(): array
     {
@@ -66,11 +91,28 @@ class MyGenerator
         return array_filter($allProperties, fn($property) => in_array($property['CODE'], $request['properties']));
     }
 
-    // Принимает свойство инфоблока.
+    // Принимает id инфоблока и свойство данного инфоблока.
     // Возвращает значение свойства, сгенерированное случайным образом. // тип пока непонятен
-    public function getPropertyValue(array $property)
+    public function getPropertyValue(int $iblockId, array $property)
     {
-        return $this->getRandWord();
+        /* PROPERTY_TYPE - тип свойства:
+            S - строка
+            N - число
+            L - список
+            F - файл
+            G - привязка к разделу
+            E - привязка к элементу
+        */
+        switch ($property['PROPERTY_TYPE']) {
+            case 'S':
+                return $this->getRandWord();
+            case 'N':
+                return $this->getRandNumber();
+            case 'L':
+                return $this->getRandListItem($iblockId, $property['CODE']);
+            default:
+                return 'other type';
+        }
     }
 
     // удалить из финальной версии
