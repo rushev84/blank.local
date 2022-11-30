@@ -41,8 +41,6 @@ $iblocks = $generator->getIblocks();
     <div class="settings-form"></div>
 </div>
 
-<div class="output"></div>
-
 <!--<script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
@@ -62,7 +60,7 @@ $iblocks = $generator->getIblocks();
                 }
             })
             .done(function (response) {
-                $("div.output").html(response);
+                $("div.settings-form").html(response);
             })
     }
 

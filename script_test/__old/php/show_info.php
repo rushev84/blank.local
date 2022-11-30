@@ -66,7 +66,7 @@ $properties = $generator->getProperties($id);
             <td><input
                         type="checkbox"
                         class="property-checkbox"
-                        id="<?= $value['CODE'] ?>"
+                        id="<?= $key ?>"
                         value="newsletter" checked/></td>
         </tr>
         <?php $i++ ?>
