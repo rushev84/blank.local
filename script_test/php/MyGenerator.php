@@ -8,6 +8,14 @@ class MyGenerator
         CModule::IncludeModule("iblock");
     }
 
+    // Возвращает случайное слово из массива слов.
+    public function getRandWord()
+    {
+        $words = ['rand_word1', 'rand_word2', 'rand_word3', 'rand_word4', 'rand_word5'];
+        return $words[rand(0, count($words) - 1)];
+    }
+
+
     public function getIblocks(): array
     {
 
@@ -32,6 +40,37 @@ class MyGenerator
 
             return $iblocks;
         }
+    }
+
+    // Принимает id инфоблока.
+    // Возвращает массив описаний свойств данного инфоблока (id, имя, код, тип).
+    public function getProperties(int $iblockId): array
+    {
+        $properties = CIBlockProperty::GetList(array("sort" => "asc", "name" => "asc"), array("ACTIVE" => "Y", "IBLOCK_ID" => $iblockId));
+
+        $props = [];
+
+        while ($prop_fields = $properties->GetNext()) {
+            $props[] = $prop_fields;
+        }
+
+        return array_map(fn($property) => array_filter($property, fn($key) => $key === 'ID' || $key === 'NAME' || $key === 'PROPERTY_TYPE' || $key === 'CODE', ARRAY_FILTER_USE_KEY),
+            $props);
+    }
+
+    // Принимает запрос, полученный со страницы выбора свойств.
+    // Возвращает свойства инфоблока, отфильтрованные в соответствии с запросом.
+    public function getOnlyChosenProperties(array $request): array
+    {
+        $allProperties = $this->getProperties($request['IBLOCK_ID']);
+        return array_filter($allProperties, fn($property) => in_array($property['CODE'], $request['properties']));
+    }
+
+    // Принимает свойство инфоблока.
+    // Возвращает значение свойства, сгенерированное случайным образом. // тип пока непонятен
+    public function getPropertyValue(array $property)
+    {
+        return $this->getRandWord();
     }
 
     // удалить из финальной версии
@@ -70,22 +109,6 @@ class MyGenerator
 //
 //        return $fields;
     }
-
-
-    public function getProperties(int $id): array
-    {
-        $properties = CIBlockProperty::GetList(array("sort" => "asc", "name" => "asc"), array("ACTIVE" => "Y", "IBLOCK_ID" => $id));
-
-        $props = [];
-
-        while ($prop_fields = $properties->GetNext()) {
-            $props[] = $prop_fields;
-        }
-
-        return array_map(fn($property) => array_filter($property, fn($key) => $key === 'ID' || $key === 'NAME' || $key === 'PROPERTY_TYPE' || $key === 'CODE', ARRAY_FILTER_USE_KEY),
-            $props);
-    }
-
 
     // удалить из финальной версии
     public function getProperties_old(int $id): array

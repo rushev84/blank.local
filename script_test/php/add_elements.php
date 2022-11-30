@@ -4,29 +4,18 @@ $generator = new MyGenerator();
 
 $request = $_POST['request'];
 
+$chosenProperties = $generator->getOnlyChosenProperties($request);
 
-function getRandWord()
-{
-    $words = ['rand_word1', 'rand_word2', 'rand_word3', 'rand_word4', 'rand_word5'];
-    return $words[rand(0, count($words) - 1)];
-}
-
-
+// добавляем элементы
 for ($i = 1; $i <= $request['COUNT']; $i++) {
+    $randNumber = rand();
 
     $el = new CIBlockElement;
 
-    $randNumber = rand();
-
-    $PROP = array();
-
-    foreach ($request['properties'] as $property) {
-        $PROP[$property] = getRandWord();
-    }
-
+    // общий массив для полей и свойств
     $arLoadProductArray = array(
         "IBLOCK_ID" => $request['IBLOCK_ID'],
-        "NAME" => getRandWord(),
+        "NAME" => $generator->getRandWord(),
         "CODE" => "code_{$randNumber}",
 
         "MODIFIED_BY" => $USER->GetID(), // элемент изменен текущим пользователем
@@ -34,19 +23,29 @@ for ($i = 1; $i <= $request['COUNT']; $i++) {
     );
 
 
+    // добавляем поля
+    in_array('ACTIVE', $request['fields']) ? $arLoadProductArray['ACTIVE'] = 'Y' : $arLoadProductArray['ACTIVE'] = 'N';
+
     if (in_array('PREVIEW_TEXT', $request['fields'])) {
-        $arLoadProductArray['PREVIEW_TEXT'] = getRandWord();
+        $arLoadProductArray['PREVIEW_TEXT'] = $generator->getRandWord();
+//        dd($generator->getRandWord());
     }
 
     if (in_array('DETAIL_TEXT', $request['fields'])) {
-        $arLoadProductArray['DETAIL_TEXT'] = getRandWord();
+        $arLoadProductArray['DETAIL_TEXT'] = $generator->getRandWord();
     }
 
+    // создаём свойства для $arLoadProductArray
+    $PROP = [];
+
+    foreach ($chosenProperties as $property) {
+        $PROP[$property['CODE']] = $generator->getPropertyValue($property);
+    }
+
+    // добавляем свойства в $arLoadProductArray (если они есть)
     if (!empty($PROP)) {
         $arLoadProductArray['PROPERTY_VALUES'] = $PROP;
     }
-
-    in_array('ACTIVE', $request['fields']) ? $arLoadProductArray['ACTIVE'] = 'Y' : $arLoadProductArray['ACTIVE'] = 'N';
 
 //    dd($arLoadProductArray);
 
@@ -61,7 +60,5 @@ for ($i = 1; $i <= $request['COUNT']; $i++) {
 }
 
 ?>
-
-<!--<span>--><? //= $request ?><!--</span>-->
 
 
