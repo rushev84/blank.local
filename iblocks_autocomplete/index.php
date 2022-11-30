@@ -29,7 +29,7 @@ $iblocks = $generator->getIblocks();
 
 
 <div class="main">
-<p style="text-align: center; font-size: 16px; font-weight: bold">Автоматическое создание элементов инфоблока, v. 1.0</p>
+<p style="text-align: center; font-size: 16px; font-weight: bold">Автоматическое создание элементов инфоблока, v. 1.1 (30.11.2022)</p>
     <select class="js-select2" id="js-select2" name="city" style="width: 300px" onchange="showSettingsForm()">
         <option value=""></option>
         <?php foreach ($iblocks as $iblock) {
