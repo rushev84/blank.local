@@ -62,7 +62,8 @@ $iblocks = $generator->getIblocks();
                 }
             })
             .done(function (response) {
-                $("div.output").html(response);
+                // $("div.output").html(response);
+                $("div.settings-form").html(response);
             })
     }
 
