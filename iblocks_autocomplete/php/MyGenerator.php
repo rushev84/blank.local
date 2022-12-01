@@ -1,11 +1,11 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'] . "/bitrix/modules/main/include/prolog_before.php");
+//require_once($_SERVER['DOCUMENT_ROOT'] . "/bitrix/modules/main/include/prolog_before.php");
 
 class MyGenerator
 {
     public function __construct()
     {
-        CModule::IncludeModule("iblock");
+//        CModule::IncludeModule("iblock");
     }
 
     // Возвращает случайное слово из массива слов.
@@ -40,7 +40,7 @@ class MyGenerator
         return ["VALUE" => $randEnum];
     }
 
-
+    // Возвращает все инфоблоки данного сайта.
     public function getIblocks(): array
     {
 

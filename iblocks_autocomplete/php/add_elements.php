@@ -1,5 +1,7 @@
 <?php
+require_once 'init.php';
 require_once 'MyGenerator.php';
+
 $generator = new MyGenerator();
 
 $request = $_POST['request'];
