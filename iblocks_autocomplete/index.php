@@ -3,7 +3,6 @@ require_once 'php/ini.php';
 require_once 'php/MyIBlock.php';
 
 $iblocks = MyIBlock::getAll();
-
 ?>
 
 <!DOCTYPE html>

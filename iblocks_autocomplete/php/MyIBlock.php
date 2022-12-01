@@ -9,43 +9,19 @@ class MyIBlock
         $this->id = $id;
     }
 
-    // Возвращает все инфоблоки данного сайта.
-    public static function getAll(): array
-    {
-        $res = \CIBlock::GetList(
-            array(
-                "NAME" => "ASC"
-            ),
-            array(
-                "ACTIVE" => "Y"
-            ), true
-        );
-
-        $iblocks = [];
-
-        while ($ar_res = $res->Fetch()) {
-            $iblocks[] = [
-                'id' => $ar_res['ID'],
-                'name' => $ar_res['NAME']
-            ];
-        }
-
-        return $iblocks;
-    }
+    // МЕТОДЫ, ВОЗВРАЩАЮЩИЕ СЛУЧАЙНЫЕ ДАННЫЕ
 
     // Возвращает случайное слово из массива слов.
-    public function getRandWord()
+    public static function getRandWord()
     {
         $words = ['rand_word1', 'rand_word2', 'rand_word3', 'rand_word4', 'rand_word5'];
         return $words[rand(0, count($words) - 1)];
     }
 
-    public function getRandNumber()
+    public static function getRandNumber()
     {
         return rand(1, 1000);
     }
-
-    // TODO: В методах getRandListItem и getRandElement не совсем корректны возвращаемые значения. Подумать, как исправить.
 
     // Принимает код свойства инфоблока (свойство должно быть типа "список").
     // Возвращает случайный элемент из списка для данного свойства.
@@ -78,6 +54,35 @@ class MyIBlock
         return ["VALUE" => $randElemId];
     }
 
+
+    // МЕТОДЫ, РАБОТАЮЩИЕ С ИНФОБЛОКАМИ, СВОЙСТВАМИ И Т.Д.
+
+    // Возвращает все инфоблоки данного сайта.
+    public static function getAll(): array
+    {
+        $res = \CIBlock::GetList(
+            array(
+                "NAME" => "ASC"
+            ),
+            array(
+                "ACTIVE" => "Y"
+            ), true
+        );
+
+        $iblocks = [];
+
+        while ($ar_res = $res->Fetch()) {
+            $iblocks[] = [
+                'id' => $ar_res['ID'],
+                'name' => $ar_res['NAME']
+            ];
+        }
+
+        return $iblocks;
+    }
+
+    // TODO: В методах getRandListItem и getRandElement не совсем корректны возвращаемые значения. Подумать, как исправить.
+
     // Возвращает массив описаний свойств данного инфоблока (id, имя, код, тип).
     public function getProperties(): array
     {
@@ -88,8 +93,6 @@ class MyIBlock
         while ($prop_fields = $properties->GetNext()) {
             $props[] = $prop_fields;
         }
-
-//        dump($props);
 
         return array_map(fn($property) => array_filter($property, fn($key) => $key === 'ID' || $key === 'NAME' || $key === 'PROPERTY_TYPE' || $key === 'CODE', ARRAY_FILTER_USE_KEY),
             $props);

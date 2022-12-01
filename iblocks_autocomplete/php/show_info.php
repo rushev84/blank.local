@@ -2,7 +2,9 @@
 require_once 'ini.php';
 require_once 'MyIBlock.php';
 
-$iBlock = new MyIBlock($_POST['id']);
+$id = $_POST['id'];
+
+$iBlock = new MyIBlock($id);
 
 $properties = $iBlock->getProperties();
 ?>
