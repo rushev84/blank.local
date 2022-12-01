@@ -12,28 +12,25 @@ class MyIBlock
     // Возвращает все инфоблоки данного сайта.
     public static function getAll(): array
     {
+        $res = \CIBlock::GetList(
+            array(
+                "NAME" => "ASC"
+            ),
+            array(
+                "ACTIVE" => "Y"
+            ), true
+        );
 
-        if (CModule::IncludeModule("iblock")) {
-            $res = \CIBlock::GetList(
-                array(
-                    "NAME" => "ASC"
-                ),
-                array(
-                    "ACTIVE" => "Y"
-                ), true
-            );
+        $iblocks = [];
 
-            $iblocks = [];
-
-            while ($ar_res = $res->Fetch()) {
-                $iblocks[] = [
-                    'id' => $ar_res['ID'],
-                    'name' => $ar_res['NAME']
-                ];
-            }
-
-            return $iblocks;
+        while ($ar_res = $res->Fetch()) {
+            $iblocks[] = [
+                'id' => $ar_res['ID'],
+                'name' => $ar_res['NAME']
+            ];
         }
+
+        return $iblocks;
     }
 
     // Возвращает случайное слово из массива слов.
@@ -48,17 +45,16 @@ class MyIBlock
         return rand(1, 1000);
     }
 
-    // Принимает id инфоблока, код свойства инфоблока (свойство должно быть типа "список").
+    // Принимает код свойства инфоблока (свойство должно быть типа "список").
     // Возвращает случайный элемент из списка для данного свойства.
     public function getRandListItem(string $propertyCode): array
     {
-        $property_enums = CIBlockPropertyEnum::GetList(Array("DEF"=>"DESC", "SORT"=>"ASC"), Array("IBLOCK_ID"=>$this->id, "CODE"=> $propertyCode));
+        $property_enums = CIBlockPropertyEnum::GetList(array("DEF" => "DESC", "SORT" => "ASC"), array("IBLOCK_ID" => $this->id, "CODE" => $propertyCode));
 
         $enums = [];
 
-        while($enum_fields = $property_enums->GetNext())
-        {
-           $enums[] = $enum_fields;
+        while ($enum_fields = $property_enums->GetNext()) {
+            $enums[] = $enum_fields;
         }
 
         $enumIds = array_map(fn($enum) => $enum['ID'], $enums);
@@ -87,13 +83,12 @@ class MyIBlock
     // Возвращает свойства инфоблока, отфильтрованные в соответствии с запросом.
     public function getOnlyChosenProperties(array $request): array
     {
-//        dd($this->id);
         $allProperties = $this->getProperties();
         return array_filter($allProperties, fn($property) => in_array($property['CODE'], $request['properties']));
     }
 
-    // Принимает id инфоблока и свойство данного инфоблока.
-    // Возвращает значение свойства, сгенерированное случайным образом. // тип пока непонятен
+    // Принимает свойство данного инфоблока.
+    // Возвращает значение свойства, сгенерированное случайным образом.
     public function getPropertyValue(array $property)
     {
         /* PROPERTY_TYPE - тип свойства:
@@ -113,6 +108,66 @@ class MyIBlock
                 return $this->getRandListItem($property['CODE']);
             default:
                 return 'other type';
+        }
+    }
+
+    // Принимает запрос со страницы.
+    // Ничего не возвращает. Печатает id добавленных элементов (в случае успеха) или сообщения об ошибках (в случае провала).
+    public function addElements(array $request)
+    {
+        global $USER;
+
+        $chosenProperties = $this->getOnlyChosenProperties($request);
+
+        // добавляем элементы
+        for ($i = 1; $i <= $request['COUNT']; $i++) {
+            $randNumber = rand();
+
+            $el = new CIBlockElement;
+
+            // общий массив для полей и свойств
+            $arLoadProductArray = array(
+                "IBLOCK_ID" => $request['IBLOCK_ID'],
+                "NAME" => $this->getRandWord(),
+                "CODE" => "code_{$randNumber}",
+
+                "MODIFIED_BY" => $USER->GetID(), // элемент изменен текущим пользователем
+                "IBLOCK_SECTION_ID" => false,          // элемент лежит в корне раздела
+            );
+
+
+            // добавляем поля
+            in_array('ACTIVE', $request['fields']) ? $arLoadProductArray['ACTIVE'] = 'Y' : $arLoadProductArray['ACTIVE'] = 'N';
+
+            if (in_array('PREVIEW_TEXT', $request['fields'])) {
+                $arLoadProductArray['PREVIEW_TEXT'] = $this->getRandWord();
+//        dd($generator->getRandWord());
+            }
+
+            if (in_array('DETAIL_TEXT', $request['fields'])) {
+                $arLoadProductArray['DETAIL_TEXT'] = $this->getRandWord();
+            }
+
+            // создаём свойства для $arLoadProductArray
+            $PROP = [];
+
+            foreach ($chosenProperties as $property) {
+                $PROP[$property['CODE']] = $this->getPropertyValue($property);
+            }
+
+            // добавляем свойства в $arLoadProductArray (если они есть)
+            if (!empty($PROP)) {
+                $arLoadProductArray['PROPERTY_VALUES'] = $PROP;
+            }
+
+            $PRODUCT_ID = $el->Add($arLoadProductArray);
+
+            if ($PRODUCT_ID) {
+                echo "Создан новый элемент с ID = " . $PRODUCT_ID;
+                echo "<br>";
+            } else {
+                echo "Error: " . $el->LAST_ERROR;
+            }
         }
     }
 }

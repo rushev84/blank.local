@@ -4,8 +4,6 @@ require_once 'MyIBlock.php';
 
 $iBlock = new MyIBlock($_POST['id']);
 
-//$id = $_POST['id'];
-
 $properties = $iBlock->getProperties();
 ?>
 
