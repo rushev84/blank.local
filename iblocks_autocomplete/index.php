@@ -1,12 +1,9 @@
 <?php
-require_once 'php/init.php';
-require_once 'php/MyGenerator.php';
+require_once 'php/ini.php';
+require_once 'php/MyIBlock.php';
 
-$generator = new MyGenerator();
+$iblocks = MyIBlock::getAll();
 
-$iblocks = $generator->getIblocks();
-
-//echo '<pre>'; print_r( $properties ); echo'</pre>';
 ?>
 
 <!DOCTYPE html>

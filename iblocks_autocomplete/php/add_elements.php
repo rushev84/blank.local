@@ -1,12 +1,14 @@
 <?php
-require_once 'init.php';
-require_once 'MyGenerator.php';
-
-$generator = new MyGenerator();
+require_once 'ini.php';
+require_once 'MyIBlock.php';
 
 $request = $_POST['request'];
 
-$chosenProperties = $generator->getOnlyChosenProperties($request);
+//dump($request);
+
+$iBlock = new MyIBlock($request['IBLOCK_ID']);
+
+$chosenProperties = $iBlock->getOnlyChosenProperties($request);
 
 // добавляем элементы
 for ($i = 1; $i <= $request['COUNT']; $i++) {
@@ -17,7 +19,7 @@ for ($i = 1; $i <= $request['COUNT']; $i++) {
     // общий массив для полей и свойств
     $arLoadProductArray = array(
         "IBLOCK_ID" => $request['IBLOCK_ID'],
-        "NAME" => $generator->getRandWord(),
+        "NAME" => $iBlock->getRandWord(),
         "CODE" => "code_{$randNumber}",
 
         "MODIFIED_BY" => $USER->GetID(), // элемент изменен текущим пользователем
@@ -29,19 +31,19 @@ for ($i = 1; $i <= $request['COUNT']; $i++) {
     in_array('ACTIVE', $request['fields']) ? $arLoadProductArray['ACTIVE'] = 'Y' : $arLoadProductArray['ACTIVE'] = 'N';
 
     if (in_array('PREVIEW_TEXT', $request['fields'])) {
-        $arLoadProductArray['PREVIEW_TEXT'] = $generator->getRandWord();
+        $arLoadProductArray['PREVIEW_TEXT'] = $iBlock->getRandWord();
 //        dd($generator->getRandWord());
     }
 
     if (in_array('DETAIL_TEXT', $request['fields'])) {
-        $arLoadProductArray['DETAIL_TEXT'] = $generator->getRandWord();
+        $arLoadProductArray['DETAIL_TEXT'] = $iBlock->getRandWord();
     }
 
     // создаём свойства для $arLoadProductArray
     $PROP = [];
 
     foreach ($chosenProperties as $property) {
-        $PROP[$property['CODE']] = $generator->getPropertyValue($request['IBLOCK_ID'], $property);
+        $PROP[$property['CODE']] = $iBlock->getPropertyValue($property);
     }
 
     // добавляем свойства в $arLoadProductArray (если они есть)

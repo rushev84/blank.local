@@ -1,13 +1,12 @@
 <?php
-require_once 'init.php';
-require_once 'MyGenerator.php';
+require_once 'ini.php';
+require_once 'MyIBlock.php';
 
-$generator = new MyGenerator();
+$iBlock = new MyIBlock($_POST['id']);
 
-$id = $_POST['id'];
+//$id = $_POST['id'];
 
-$properties = $generator->getProperties($id);
-//echo '<pre>'; print_r( $properties ); echo'</pre>';
+$properties = $iBlock->getProperties();
 ?>
 
 <p><b>Поля инфоблока</b></p>
