@@ -45,6 +45,8 @@ class MyIBlock
         return rand(1, 1000);
     }
 
+    // TODO: В методах getRandListItem и getRandElement не совсем корректны возвращаемые значения. Подумать, как исправить.
+
     // Принимает код свойства инфоблока (свойство должно быть типа "список").
     // Возвращает случайный элемент из списка для данного свойства.
     public function getRandListItem(string $propertyCode): array
@@ -64,6 +66,18 @@ class MyIBlock
         return ["VALUE" => $randEnum];
     }
 
+    // Возвращает случайный элемент данного инфоблока.
+    public function getRandElement(): array
+    {
+        $elems = $this->getAllElements();
+
+        $elemsIds = array_map(fn($elem) => $elem['ID'], $elems);
+
+        $randElemId = $elemsIds[array_rand($elemsIds)];
+
+        return ["VALUE" => $randElemId];
+    }
+
     // Возвращает массив описаний свойств данного инфоблока (id, имя, код, тип).
     public function getProperties(): array
     {
@@ -74,6 +88,8 @@ class MyIBlock
         while ($prop_fields = $properties->GetNext()) {
             $props[] = $prop_fields;
         }
+
+//        dump($props);
 
         return array_map(fn($property) => array_filter($property, fn($key) => $key === 'ID' || $key === 'NAME' || $key === 'PROPERTY_TYPE' || $key === 'CODE', ARRAY_FILTER_USE_KEY),
             $props);
@@ -92,12 +108,12 @@ class MyIBlock
     public function getPropertyValue(array $property)
     {
         /* PROPERTY_TYPE - тип свойства:
-            S - строка
-            N - число
-            L - список
+            S - строка (ГОТОВО)
+            N - число (ГОТОВО)
+            L - список (ГОТОВО)
             F - файл
             G - привязка к разделу
-            E - привязка к элементу
+            E - привязка к элементу (ГОТОВО)
         */
         switch ($property['PROPERTY_TYPE']) {
             case 'S':
@@ -106,6 +122,9 @@ class MyIBlock
                 return $this->getRandNumber();
             case 'L':
                 return $this->getRandListItem($property['CODE']);
+            case 'E':
+                return $this->getRandElement();
+
             default:
                 return 'other type';
         }
@@ -155,6 +174,8 @@ class MyIBlock
                 $PROP[$property['CODE']] = $this->getPropertyValue($property);
             }
 
+//            dd($PROP);
+
             // добавляем свойства в $arLoadProductArray (если они есть)
             if (!empty($PROP)) {
                 $arLoadProductArray['PROPERTY_VALUES'] = $PROP;
@@ -169,5 +190,21 @@ class MyIBlock
                 echo "Error: " . $el->LAST_ERROR;
             }
         }
+    }
+
+    public function getAllElements()
+    {
+        $arSelect = array("ID", "NAME", "DATE_ACTIVE_FROM");
+        $arFilter = array("IBLOCK_ID" => IntVal($this->id));
+        $res = CIBlockElement::GetList(array(), $arFilter, false, array("nPageSize" => 50), $arSelect);
+
+        $elems = [];
+
+        while ($ob = $res->GetNextElement()) {
+            $arFields = $ob->GetFields();
+            $elems[] = $arFields;
+        }
+
+        return $elems;
     }
 }

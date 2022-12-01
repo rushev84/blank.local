@@ -52,8 +52,8 @@ $iblocks = MyIBlock::getAll();
                 }
             })
             .done(function (response) {
-                // $("div.output").html(response);
-                $("div.settings-form").html(response);
+                $("div.output").html(response);
+                // $("div.settings-form").html(response);
             })
     }
 
